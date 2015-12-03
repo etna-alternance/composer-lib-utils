@@ -9,15 +9,15 @@ class FileUtils
     /**
      * @param UploadedFile $file
      *
-     * @return array|null
+     * @return object|integer|double|array|boolean|null
      */
     public static function handleFile(UploadedFile $file)
     {
-        $content = null;
+        $content   = null;
         $extension = $file->guessExtension();
 
         if ("txt" === $extension) {
-            $file = file_get_contents($file);
+            $file    = file_get_contents($file);
             $content = json_decode($file, true);
 
             if (is_string($content) || null === $content) {
@@ -38,12 +38,12 @@ class FileUtils
         $content = utf8_encode($content);
         $content = array_filter(
             explode("\n", $content),
-            function ($row) {
+            function($row) {
                 return !empty($row);
             }
         );
         $content = array_map(
-            function ($row) {
+            function($row) {
                 return str_getcsv($row, ";", '"', "\n");
             },
             $content

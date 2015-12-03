@@ -4,11 +4,9 @@ use Behat\Behat\Context\BehatContext;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-putenv("APPLICATION_ENV=" . (false !== getenv("APPLICATION_ENV") ?: "testing"));
-
 use ETNA\FeatureContext as EtnaFeatureContext;
 use ETNA\Utils\CsvUtils;
-use ETNA\Utils\FileUtils;
+use ETNA\Utils\FileUtils as EtnaFileUtils;
 use ETNA\Utils\NotifyUtils;
 
 /**
@@ -23,7 +21,7 @@ class FeatureContext extends BehatContext
     use EtnaFeatureContext\RabbitMQ;
 
     static private $_parameters;
-    static $vhosts = ["/test-behat"];
+    static private $vhosts;
 
     private $result    = null;
     private $csv_lines = null;
@@ -38,8 +36,8 @@ class FeatureContext extends BehatContext
     public function __construct(array $parameters)
     {
         self::$_parameters = $parameters;
+        self::$vhosts      = ["/test-behat"];
 
-        $result = null;
         ini_set('display_errors', true);
         ini_set('xdebug.var_display_max_depth', 100);
         ini_set('xdebug.var_display_max_children', 100);
@@ -50,7 +48,7 @@ class FeatureContext extends BehatContext
     /**
      * @When /^je convertis en csv le tableau contenu dans "([^"]*)"(?: en prefixant avec "([^"]*)"?)?$/
      */
-    public function jeConvertisEnCsvLeTableauMultidimensionnelContenuDans($filename, $prefix = null)
+    public function jeConvertisEnCsvLeTableauContenuDans($filename, $prefix = null)
     {
         $filepath = realpath($this->requests_path . "/" . $filename);
 
@@ -62,7 +60,7 @@ class FeatureContext extends BehatContext
         }
 
         $array_to_convert = array_map(
-            function ($line) use ($prefix) {
+            function($line) use ($prefix) {
                 return CsvUtils::getTokenFromArray($line, $prefix);
             },
             $array_to_convert
@@ -79,7 +77,7 @@ class FeatureContext extends BehatContext
     /**
      * @When /^j'envoie un mail a "([^"]*)" avec "([^"]*)" avec le titre "([^"]*)" et le template contenu dans le fichier "([^"]*)" et les tokens contenus dans "([^"]*)"$/
      */
-    public function jEnvoieUnMail($to, $from, $title, $template_filename, $tokens_filename)
+    public function jEnvoieUnMail($to_email, $from_email, $title, $template_filename, $tokens_filename)
     {
         $template_filepath = realpath($this->requests_path . "/" . $template_filename);
         $template          = file_get_contents($template_filepath);
@@ -88,7 +86,7 @@ class FeatureContext extends BehatContext
         $tokens            = json_decode($tokens_content, true);
 
         try {
-            NotifyUtils::sendMail(self::$silex_app, $title, $template, $from, $to, $tokens);
+            NotifyUtils::sendMail(self::$silex_app, $title, $template, $from_email, $to_email, $tokens);
         } catch (\Exception $exception) {
             $this->error = $exception;
         }
@@ -115,11 +113,11 @@ class FeatureContext extends BehatContext
     /**
      * @Then /^il doit y avoir un message dans la file "([^"]*)" avec le corps contenu dans "([^"]*)"$/
      */
-    public function ilDoitYAvoirUnMessageDansLaFileAvecLeCorpsContenuDans($queue = null, $body = null)
+    public function ilDoitYavoirUnMessageDansLaFileAvecLeCorpsContenuDans($queue = null, $body = null)
     {
         if ($body !== null) {
             if (!file_exists($this->results_path . $body)) {
-               throw new Exception("File not found : {$this->results_path}${body}");
+                throw new Exception("File not found : {$this->results_path}${body}");
             }
         }
 
@@ -131,9 +129,9 @@ class FeatureContext extends BehatContext
         $response_msg    = $channel->basic_get($queue);
         $parsed_response = json_decode($response_msg->body);
         $this->check($parsed_wanted, $parsed_response, "result", $errors);
-        if ($n = count($errors)) {
+        if ($nb_errors = count($errors)) {
             echo json_encode($parsed_response, JSON_PRETTY_PRINT);
-            throw new Exception("{$n} errors :\n" . implode("\n", $errors));
+            throw new Exception("{$nb_errors} errors :\n" . implode("\n", $errors));
         }
     }
 
@@ -150,7 +148,6 @@ class FeatureContext extends BehatContext
         if ($expected_result === null) {
             throw new Exception("json_decode error");
         }
-        // print_r($expected_result); print_r($this->result);
 
         $this->check($expected_result, $real_result, "result", $errors);
         if (($nb_errors = count($errors)) > 0) {
@@ -173,11 +170,11 @@ class FeatureContext extends BehatContext
      */
     public function leResultatDevraitRessemblerAuFichierCsv($filename)
     {
-        $filepath = realpath($this->results_path . "/" . $filename);
+        $filepath         = realpath($this->results_path . "/" . $filename);
         $expected_content = trim(file_get_contents($filepath), "\n");
 
         if ($expected_content !== $this->result) {
-            echo "\n", $expected_content,"\n\n";
+            echo "\n", $expected_content, "\n\n";
             echo $this->result, "\n\n";
             throw new Exception("CSVs results are not the same");
         }
@@ -196,13 +193,13 @@ class FeatureContext extends BehatContext
     /**
      * @When /^je veux récupérer le contenu du fichier "([^"]*)"$/
      */
-    public function jeVeuxRecupererLeContenuDuFichier($filename, $mime_type = null)
+    public function jeVeuxRecupererLeContenuDuFichier($filename)
     {
         $filepath = realpath($this->requests_path . "/" . $filename);
         $file     = new UploadedFile($filepath, $filename);
 
         try {
-            $this->result = FileUtils::handleFile($file);
+            $this->result = EtnaFileUtils::handleFile($file);
         } catch (\Exception $exception) {
             $this->error = $exception;
         }
@@ -211,7 +208,7 @@ class FeatureContext extends BehatContext
     /**
      * @Then /^il devrait y'avoir eu une erreur$/
      */
-    public function ilDevraitYAvoirEuUneErreur()
+    public function ilDevraitYavoirEuUneErreur()
     {
         if (null === $this->error) {
             throw new \Exception("Expecting an error to happen but everything went good");
@@ -221,7 +218,7 @@ class FeatureContext extends BehatContext
     /**
      * @Then /^il ne devrait pas y'avoir eu une erreur$/
      */
-    public function ilNeDevraitPasYAvoirEuUneErreur()
+    public function ilNeDevraitPasYavoirEuUneErreur()
     {
         if (null !== $this->error) {
             throw new \Exception("Wasn't expecting an error to happen but went bad : {$this->error->getMessage()}");
@@ -231,11 +228,11 @@ class FeatureContext extends BehatContext
     /**
      * @Then /^le message d'erreur devrait être "([^"]*)"(?: et le code (\d+)?)$/
      */
-    public function leMessageDErreurDevraitEtre($message, $code = null)
+    public function leMessageDerreurDevraitEtre($msg, $code = null)
     {
         $code = null === $code ?: intval($code);
-        if (null === $this->error || $this->error->getMessage() !== $message) {
-            throw new Exception("Expecting error message to be \"{$message}\" but got \"{$this->error->getMessage()}\"");
+        if (null === $this->error || $this->error->getMessage() !== $msg) {
+            throw new Exception("Expecting error message to be \"{$msg}\" but got \"{$this->error->getMessage()}\"");
         }
         if (null !== $code && $this->error->getCode() !== $code) {
             throw new Exception("Expecting error code to be \"{$code}\" but got \"{$this->error->getCode()}\"");

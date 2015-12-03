@@ -13,7 +13,7 @@ class RabbitMQConf implements ServiceProviderInterface
 
     public function __construct($rmq_config = null)
     {
-        $rmq_config = $rmq_config ?: [];
+        $rmq_config                    = $rmq_config ?: [];
         $this->rmq_config['exchanges'] = isset($rmq_config['exchanges']) ? $rmq_config['exchanges'] : [];
         $this->rmq_config['queues']    = isset($rmq_config['queues'])    ? $rmq_config['queues']    : [];
     }

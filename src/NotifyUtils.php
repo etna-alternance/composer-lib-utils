@@ -38,6 +38,7 @@ class NotifyUtils
             "Name"    => $letter_title,
             "Content" => $letter_template_b64,
         ];
+
         $data = [
             "Name"    => "data.csv",
             "Content" => $csv_base64,
@@ -76,19 +77,20 @@ class NotifyUtils
         }
 
         $tokens = array_map(
-            function ($token) {
+            function($token) {
                 return "{{$token}}";
             },
             array_keys($mail_data)
         );
 
         $template = str_replace($tokens, array_values($mail_data), $email_template);
-        $mail = [
+        $mail     = [
             "from"    => $email_from,
             "to"      => $email_to,
             "subject" => $email_title,
             "content" => $template
         ];
+
         $mail = array_merge($mail, $email_opt);
 
         $app["amqp.queues"]["email"]->send($mail);

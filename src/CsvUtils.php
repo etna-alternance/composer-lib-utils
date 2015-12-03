@@ -64,7 +64,7 @@ class CsvUtils
      * @param string $enclosure Le caractère à utiliser pour echapper
      * @param string $eol       Le caractère d'EndOfFile
      *
-     * @return string
+     * @return false|string
      */
     public static function sputcsv(array $row, $delimiter = ',', $enclosure = '"', $eol = "\n")
     {
