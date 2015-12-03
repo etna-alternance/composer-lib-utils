@@ -1,3 +1,5 @@
+[![Build Status](http://drone.etna-alternance.net/api/badge/github.com/etna-alternance/composer-lib-utils/status.svg?branch=master)](http://drone.etna-alternance.net/github.com/etna-alternance/composer-lib-utils)
+
 # composer-lib-utils
 Paquet composer contenant des fonctions utiles
 
