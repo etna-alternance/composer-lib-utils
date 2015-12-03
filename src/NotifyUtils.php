@@ -30,13 +30,13 @@ class NotifyUtils
         if (!is_array($sprinter_data) || empty($sprinter_data)) {
             throw new \Exception("Bad data provided for printing", 400);
         }
-        $letter_template_base64 = base64_encode($letter_template);
-        $csv                    = CsvUtils::arrayToCsv($sprinter_data, $sprinter_opt["csv_rows"]);
-        $csv_base64             = base64_encode($csv);
+        $letter_template_b64 = base64_encode($letter_template);
+        $csv                 = CsvUtils::arrayToCsv($sprinter_data, $sprinter_opt["csv_rows"]);
+        $csv_base64          = base64_encode($csv);
 
         $template = [
             "Name"    => $letter_title,
-            "Content" => $letter_template_base64,
+            "Content" => $letter_template_b64,
         ];
         $data = [
             "Name"    => "data.csv",

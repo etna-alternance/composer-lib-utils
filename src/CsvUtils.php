@@ -68,20 +68,20 @@ class CsvUtils
      */
     public static function sputcsv(array $row, $delimiter = ',', $enclosure = '"', $eol = "\n")
     {
-        static $fp = false;
+        static $file_pointer = false;
 
-        if (false === $fp) {
-            $fp = fopen('php://temp', 'r+');
+        if (false === $file_pointer) {
+            $file_pointer = fopen('php://temp', 'r+');
         } else {
-            rewind($fp);
+            rewind($file_pointer);
         }
 
-        if (false === fputcsv($fp, $row, $delimiter, $enclosure)) {
+        if (false === fputcsv($file_pointer, $row, $delimiter, $enclosure)) {
             return false;
         }
 
-        rewind($fp);
-        $csv = fgets($fp);
+        rewind($file_pointer);
+        $csv = fgets($file_pointer);
 
         if ($eol !== PHP_EOL) {
             $csv = substr($csv, 0, (0 - strlen(PHP_EOL))) . $eol;
