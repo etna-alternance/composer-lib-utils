@@ -55,7 +55,7 @@ class FeatureContext extends BehatContext
         $array_to_convert = file_get_contents($filepath);
         $array_to_convert = json_decode($array_to_convert, true);
 
-        if ($array_to_convert === null) {
+        if (null === $array_to_convert) {
             throw new Exception("json_decode error");
         }
 
@@ -115,13 +115,14 @@ class FeatureContext extends BehatContext
      */
     public function ilDoitYavoirUnMessageDansLaFileAvecLeCorpsContenuDans($queue = null, $body = null)
     {
-        if ($body !== null) {
-            if (!file_exists($this->results_path . $body)) {
+        $result_path = $this->results_path . $body;
+        if (null !== $body) {
+            if (!file_exists($result_path)) {
                 throw new Exception("File not found : {$this->results_path}${body}");
             }
         }
 
-        $body          = file_get_contents($this->results_path . $body);
+        $body          = file_get_contents($result_path);
         $parsed_wanted = json_decode($body);
 
         $channel = self::$silex_app["amqp.queues"][$queue]->getChannel();
@@ -145,12 +146,12 @@ class FeatureContext extends BehatContext
     {
         $expected_result = json_decode($string);
         $real_result     = json_decode(json_encode($this->result));
-        if ($expected_result === null) {
+        if (null === $expected_result) {
             throw new Exception("json_decode error");
         }
 
         $this->check($expected_result, $real_result, "result", $errors);
-        if (($nb_errors = count($errors)) > 0) {
+        if (0 < ($nb_errors = count($errors))) {
             echo json_encode($real_result, JSON_PRETTY_PRINT);
             throw new Exception("{$nb_errors} errors :\n" . implode("\n", $errors));
         }
@@ -206,7 +207,7 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @Then /^il devrait y'avoir eu une erreur$/
+     * @Then /^il devrait y avoir eu une erreur$/
      */
     public function ilDevraitYavoirEuUneErreur()
     {
@@ -216,7 +217,7 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @Then /^il ne devrait pas y'avoir eu une erreur$/
+     * @Then /^il ne devrait pas y avoir eu une erreur$/
      */
     public function ilNeDevraitPasYavoirEuUneErreur()
     {

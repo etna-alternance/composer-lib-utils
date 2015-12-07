@@ -53,7 +53,7 @@ class NotifyUtils
     }
 
     /**
-     * Envoi un mail via rabbitMq
+     * Envoie un mail via rabbitMq
      *
      * @param Application $app            Silex application
      * @param string      $email_title    Le titre de l'email
@@ -72,7 +72,7 @@ class NotifyUtils
         array $mail_data,
         array $email_opt = []
     ) {
-        if (!isset($email_to) || trim($email_to) === "" || !isset($email_from) || trim($email_from) === "") {
+        if (!isset($email_to) || "" === trim($email_to) || !isset($email_from) || "" === trim($email_from)) {
             throw new \Exception("No email provided", 400);
         }
 

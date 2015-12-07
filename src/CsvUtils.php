@@ -80,7 +80,7 @@ class CsvUtils
         rewind($file_pointer);
         $csv = fgets($file_pointer);
 
-        if ($eol !== PHP_EOL) {
+        if (PHP_EOL !== $eol) {
             $csv = substr($csv, 0, (0 - strlen(PHP_EOL))) . $eol;
         }
 
