@@ -16,11 +16,11 @@ class CsvUtils
     {
         $tokens = [];
         foreach ($array as $key => $value) {
+            $sub_prefix = (false === empty($prefix)) ? "{$prefix}_{$key}" : $key;
             if (is_array($value)) {
-                $sub_prefix = (false === empty($prefix) ? "{$prefix}_{$key}" : $key);
-                $tokens     = array_merge($tokens, self::getTokenFromArray($value, $sub_prefix));
+                $tokens = array_merge($tokens, self::getTokenFromArray($value, $sub_prefix));
             } else {
-                $tokens[(!empty($prefix)) ? "{$prefix}_{$key}" : $key] = utf8_decode($value);
+                $tokens[$sub_prefix] = utf8_decode($value);
             }
         }
         return $tokens;
@@ -41,10 +41,7 @@ class CsvUtils
 
         $csv = self::sputcsv($headers, ';', '"', "\n");
         foreach ($tokens as $value) {
-            if (!empty(array_diff($headers, array_keys($value)))) {
-                throw new \Exception("Bad csv", 400);
-            }
-            if (count($headers) !== count($value)) {
+            if (!empty(array_diff($headers, array_keys($value))) || count($headers) !== count($value)) {
                 throw new \Exception("Bad csv", 400);
             }
             $csv .= self::sputcsv(array_values($value), ';', '"', "\n");

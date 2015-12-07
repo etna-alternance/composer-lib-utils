@@ -9,7 +9,7 @@ Scénario: Envoyer un email
     Et    il doit y avoir un message dans la file "email" avec le corps contenu dans "simple_email_job.json"
 
 Plan du Scénario: Envoyer un email sans donner d'adresse
-    Quand j'envoie un mail a "test@test.test" avec "" avec le titre "title" et le template contenu dans le fichier "simple_template" et les tokens contenus dans "simple_tokens.json"
+    Quand j'envoie un mail a "<sender>" avec "<reciever>" avec le titre "title" et le template contenu dans le fichier "simple_template" et les tokens contenus dans "simple_tokens.json"
     Alors il devrait y'avoir eu une erreur
     Et    le message d'erreur devrait être "No email provided" et le code 400
 
