@@ -77,7 +77,7 @@ class NotifyUtils
         }
 
         $tokens = array_map(
-            function($token) {
+            function ($token) {
                 return "{{$token}}";
             },
             array_keys($mail_data)

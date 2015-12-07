@@ -38,12 +38,12 @@ class FileUtils
         $content = utf8_encode($content);
         $content = array_filter(
             explode("\n", $content),
-            function($row) {
+            function ($row) {
                 return !empty($row);
             }
         );
         $content = array_map(
-            function($row) {
+            function ($row) {
                 return str_getcsv($row, ";", '"', "\n");
             },
             $content
