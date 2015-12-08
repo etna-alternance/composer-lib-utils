@@ -7,7 +7,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use ETNA\FeatureContext as EtnaFeatureContext;
 use ETNA\Utils\CsvUtils;
 use ETNA\Utils\FileUtils as EtnaFileUtils;
+use ETNA\Utils\LoginUtils;
 use ETNA\Utils\NotifyUtils;
+use ETNA\Utils\PasswordUtils;
 
 /**
  * Features context
@@ -188,6 +190,47 @@ class FeatureContext extends BehatContext
     {
         if ($this->csv_lines !== intval($expected_nb_lines)) {
             throw new Exception("Expected {$expected_nb_lines} CSV lines but got {$this->csv_lines}");
+        }
+    }
+
+    /**
+     * @When /^je génère un mot de passe(?: avec (\d+) lettres(?: et (\d+) autres caractères)?)?$/
+     */
+    public function jeGenereUnMotDePasse($letters = 6, $non_letters = 2)
+    {
+        $this->result = PasswordUtils::generate($letters, $non_letters);
+    }
+
+    /**
+     * @Then /^le mot de passe devrait contenir (\d+) lettres et (\d+) autres caractères$/
+     */
+    public function leMotDePasseDevraitContenir($letters, $non_letters)
+    {
+        $regex  = "/(?=^([^A-Za-z]*[a-zA-Z]){" . $letters;
+        $regex .= "}[^A-Za-z]*$)(?=^([^0-9\.]*[0-9\.]){" . $non_letters . "}[^0-9\.]*$)/";
+
+        if (1 !== preg_match($regex, $this->result)) {
+            throw new Exception("Generated password does not match");
+        }
+    }
+
+    /**
+     * @When /^je chiffre le mot de passe "([^"]*)"$/
+     */
+    public function jeChiffreLeMotDePasse($password)
+    {
+        $this->result = PasswordUtils::encrypt($password);
+    }
+
+    /**
+     * @When /^je veux générer un login avec le nom "([^"]*)" et le prénom "([^"]*)"$/
+     */
+    public function jeVeuxGenererUnLogin($lastname, $firstname)
+    {
+        try {
+            $this->result = LoginUtils::generate($lastname, $firstname);
+        } catch (\Exception $exception) {
+            $this->error = $exception;
         }
     }
 

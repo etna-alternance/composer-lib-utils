@@ -20,7 +20,17 @@ Toutes les classes `utils` de ce composant seront dans le namespace `ETNA\Utils`
 
 - `FileUtils::handleFile` Récupère le contenu d'un fichier texte (csv ou json) et le transforme en tableau PHP
 
+### LoginUtils
+
+- `LoginUtils::removeAccents` Supprime les accents d'une string
+- `LoginUtils::generate` Génère un login ETNA (login_l) depuis un prénom et un nom
+
 ### NotifyUtils
 
 - `NotifyUtils::sendPrint` Envoie un job à sprinter pour l'impression de documents
 - `NotifyUtils::sendMail` Envoie un job pigeon voyageur pour l'envoi de mail
+
+### PasswordUtils
+
+- `PasswordUtils::generate` Génère un mot de passe paramètrable (nombre de lettre, nombre d'autres caractères)
+- `PasswordUtils::encrypt` Chiffre le mot de passe donné en paramètre
