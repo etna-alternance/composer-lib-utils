@@ -1,0 +1,22 @@
+image: etna/drone-php
+env:
+  - APPLICATION_ENV=drone
+  - COVERALLS_REPO_TOKEN=$$COVERALLS_TOKEN
+  - COVERALLS_SERVICE_NAME=drone.io
+  - RABBITMQ_URL=http://guest:guest@localhost:5672
+  - RABBITMQ_VHOST=/test-behat
+  - TEST_LIBUTILS_SPRINTER_ROUTING_KEY=sprinter.lefran_f
+script:
+  - composer install --dev --no-interaction --prefer-source
+  - composer phing
+  - composer coveralls
+services:
+  - rabbitmq
+notify:
+  slack:
+    webhook_url: $$SLACK_WEBHOOK_URL
+    username: drone
+    channel: $$SLACK_CHANNEL
+    on_started: true
+    on_failure: true
+    on_success: true
