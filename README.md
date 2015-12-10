@@ -1,5 +1,8 @@
 [![Build Status](http://drone.etna-alternance.net/api/badge/github.com/etna-alternance/composer-lib-utils/status.svg?branch=master)](http://drone.etna-alternance.net/github.com/etna-alternance/composer-lib-utils)
 [![Coverage Status](https://coveralls.io/repos/etna-alternance/composer-lib-utils/badge.svg?branch=master&service=github)](https://coveralls.io/github/etna-alternance/composer-lib-utils?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/etna-alternance/composer-lib-utils/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/etna-alternance/composer-lib-utils/?branch=master)
+[![GitHub version](https://badge.fury.io/gh/etna-alternance%2Fcomposer-lib-utils.svg)](https://badge.fury.io/gh/etna-alternance%2Fcomposer-lib-utils)
+[![Dependency Status](https://www.versioneye.com/user/projects/56694bdc43cfea0031000078/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56694bdc43cfea0031000078)
 
 # composer-lib-utils
 Paquet composer contenant des fonctions utiles
