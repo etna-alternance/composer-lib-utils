@@ -53,6 +53,32 @@ class NotifyUtils
     }
 
     /**
+     * Prépare des fichiers pour de l'envoi par mail
+     *
+     * @param  array<int,array<string, string>> $files Fichiers sous la forme ["name" => "...", "path" => "..."]
+     *
+     * @return array<int,array<string, string>>        Fichiers prêts pour pigeon voyageur
+     */
+    public static function prepareFilesForMail(array $files)
+    {
+        $prepared = [];
+
+        foreach ($files as $file) {
+            if (!isset($file["path"]) ||
+                !isset($file["name"]) ||
+                false === ($file_content = @file_get_contents($file["path"]))) {
+                continue;
+            }
+            $prepared[] = [
+                "name"      => $file["name"],
+                "content"   => base64_encode($file_content),
+            ];
+        }
+
+        return $prepared;
+    }
+
+    /**
      * Envoie un mail via rabbitMq
      *
      * @param Application $app            Silex application

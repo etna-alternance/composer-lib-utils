@@ -32,6 +32,7 @@ Toutes les classes `utils` de ce composant seront dans le namespace `ETNA\Utils`
 ### NotifyUtils
 
 - `NotifyUtils::sendPrint` Envoie un job à sprinter pour l'impression de documents
+- `NotifyUtils::prepareFilesForMail` Prepare un tableau de fichier pour des pieces jointes
 - `NotifyUtils::sendMail` Envoie un job pigeon voyageur pour l'envoi de mail
 
 ### PasswordUtils

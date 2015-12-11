@@ -36,6 +36,11 @@ class CsvUtils
      */
     public static function arrayToCsv(array $array, int &$csv_rows = null)
     {
+        if (true === empty($array)) {
+            $csv_rows = 0;
+            return "";
+        }
+
         $headers = array_keys($array[0]);
         $tokens  = array_values($array);
 
