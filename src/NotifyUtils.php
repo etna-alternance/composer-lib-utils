@@ -70,8 +70,8 @@ class NotifyUtils
                 continue;
             }
             $prepared[] = [
-                "name"      => $file["name"],
-                "content"   => base64_encode($file_content),
+                "name"    => $file["name"],
+                "content" => base64_encode($file_content),
             ];
         }
 
