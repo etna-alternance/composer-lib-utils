@@ -55,9 +55,9 @@ class NotifyUtils
     /**
      * Prépare des fichiers pour de l'envoi par mail
      *
-     * @param  array<int,array<string, string>> $files Fichiers sous la forme ["name" => "...", "path" => "..."]
+     * @param  array $files Fichiers sous la forme ["name" => "...", "path" => "..."]
      *
-     * @return array<int,array<string, string>>        Fichiers prêts pour pigeon voyageur
+     * @return array        Fichiers prêts pour pigeon voyageur
      */
     public static function prepareFilesForMail(array $files)
     {

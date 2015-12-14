@@ -46,7 +46,7 @@ class CsvUtils
 
         $csv = self::sputcsv($headers, ';', '"', "\n");
         foreach ($tokens as $value) {
-            if (!empty(array_diff($headers, array_keys($value))) || count($headers) !== count($value)) {
+            if (!empty(array_diff(array_keys($value), $headers))) {
                 throw new \Exception("Bad csv", 400);
             }
             $csv .= self::sputcsv(array_values($value), ';', '"', "\n");
