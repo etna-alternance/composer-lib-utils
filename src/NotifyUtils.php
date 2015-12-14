@@ -64,14 +64,12 @@ class NotifyUtils
         $prepared = [];
 
         foreach ($files as $file) {
-            if (!isset($file["path"]) ||
-                !isset($file["name"]) ||
-                false === ($file_content = @file_get_contents($file["path"]))) {
+            if (!isset($file["path"]) || !isset($file["name"]) || false === file_exists($file["path"])) {
                 continue;
             }
             $prepared[] = [
                 "name"    => $file["name"],
-                "content" => base64_encode($file_content),
+                "content" => base64_encode(file_get_contents($file["path"])),
             ];
         }
 
