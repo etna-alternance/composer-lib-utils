@@ -77,9 +77,9 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @When /^j'envoie un mail a "([^"]*)" avec "([^"]*)" avec le titre "([^"]*)" et le template contenu dans le fichier "([^"]*)" et les tokens contenus dans "([^"]*)"$/
+     * @When /^j'envoie un mail a "([^"]*)" avec "([^"]*)" avec le titre "([^"]*)" et le template contenu dans le fichier "([^"]*)" et les tokens contenus dans "([^"]*)"(?: avec comme pièce jointe les fichiers "([^"]*)"?)?$/
      */
-    public function jEnvoieUnMail($to_email, $from_email, $title, $template_filename, $tokens_filename)
+    public function jEnvoieUnMail($to_email, $from_email, $title, $template_filename, $tokens_filename, $files = null)
     {
         $template_filepath = realpath($this->requests_path . "/" . $template_filename);
         $template          = file_get_contents($template_filepath);
@@ -87,8 +87,26 @@ class FeatureContext extends BehatContext
         $tokens_content    = file_get_contents($tokens_filepath);
         $tokens            = json_decode($tokens_content, true);
 
+        $mail_opt = [];
+        if (null !== $files) {
+            $mail_opt = [
+                "files" => NotifyUtils::prepareFilesForMail(
+                    array_map(
+                        function ($filename) {
+                            $filename = trim($filename);
+                            return [
+                                "name" => $filename,
+                                "path" => "{$this->requests_path}/{$filename}"
+                            ];
+                        },
+                        explode(";", $files)
+                    )
+                )
+            ];
+        }
+
         try {
-            NotifyUtils::sendMail(self::$silex_app, $title, $template, $from_email, $to_email, $tokens);
+            NotifyUtils::sendMail(self::$silex_app, $title, $template, $from_email, $to_email, $tokens, $mail_opt);
         } catch (\Exception $exception) {
             $this->error = $exception;
         }

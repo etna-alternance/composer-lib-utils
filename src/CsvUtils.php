@@ -36,12 +36,17 @@ class CsvUtils
      */
     public static function arrayToCsv(array $array, int &$csv_rows = null)
     {
+        if (true === empty($array)) {
+            $csv_rows = 0;
+            return "";
+        }
+
         $headers = array_keys($array[0]);
         $tokens  = array_values($array);
 
         $csv = self::sputcsv($headers, ';', '"', "\n");
         foreach ($tokens as $value) {
-            if (!empty(array_diff($headers, array_keys($value))) || count($headers) !== count($value)) {
+            if (!empty(array_diff(array_keys($value), $headers))) {
                 throw new \Exception("Bad csv", 400);
             }
             $csv .= self::sputcsv(array_values($value), ';', '"', "\n");

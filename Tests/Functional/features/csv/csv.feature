@@ -27,6 +27,12 @@ Scénario: Transformer un tableau multidimensionnel en prefixant les champs
     Et    le résultat devrait être identique au fichier csv "prefixed_csv_from_multidimentional_array.csv"
     Et    le csv sortant devrait contenir 3 lignes
 
+Scénario: Transformer un tableau vide
+    Quand je convertis en csv le tableau contenu dans "empty_array.json"
+    Alors il ne devrait pas y avoir eu une erreur
+    Et    le résultat devrait être identique au fichier csv "empty.csv"
+    Et    le csv sortant devrait contenir 0 lignes
+
 Plan du Scénario: Transformer un tableau mal formatté
     Quand je convertis en csv le tableau contenu dans "<array_source>"
     Alors il devrait y avoir eu une erreur
