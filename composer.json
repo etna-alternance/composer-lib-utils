@@ -3,7 +3,6 @@
     "description": "Paquet composer contenant des fonctions utiles",
     "keywords": ["utils", "silex", "composer"],
     "license": "proprietary",
-    "version": "1.0.0",
     "authors": [
         {
             "name": "ETNA",
