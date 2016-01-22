@@ -9,10 +9,10 @@ Scénario: Transformer un simple tableau
     Et    le résultat devrait être identique au fichier csv "csv_from_simple_array.csv"
     Et    le csv sortant devrait contenir 1 lignes
 
-Scénario: Transformer un simple tableau
-    Quand je convertis en csv le tableau contenu dans "simple_array.json"
+Scénario: Transformer un simple tableau avec des "\"
+    Quand je convertis en csv le tableau contenu dans "simple_array_with_backslash_n.json"
     Alors il ne devrait pas y avoir eu une erreur
-    Et    le résultat devrait être identique au fichier csv "csv_from_simple_array.csv"
+    Et    le résultat devrait être identique au fichier csv "csv_from_simple_array_with_backslash_n.csv"
     Et    le csv sortant devrait contenir 1 lignes
 
 Scénario: Transformer un tableau contenant plusieurs lignes
