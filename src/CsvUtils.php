@@ -50,8 +50,8 @@ class CsvUtils
                 throw new \Exception("Bad csv", 400);
             }
 
-            $cleanArray = str_replace("\n", " ", array_values($value));
-            $csv       .= self::sputcsv($cleanArray, ';', '"', "\n");
+            $clean_array = str_replace("\n", " ", array_values($value));
+            $csv       .= self::sputcsv($clean_array, ';', '"', "\n");
         }
         $csv      = substr_replace($csv, "", -1);
         $csv_rows = count($tokens);
