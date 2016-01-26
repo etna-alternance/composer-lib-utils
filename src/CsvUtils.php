@@ -51,7 +51,7 @@ class CsvUtils
             }
 
             $cleanArray = str_replace("\n", " ", array_values($value));
-            $csv        .= self::sputcsv($cleanArray, ';', '"', "\n");
+            $csv       .= self::sputcsv($cleanArray, ';', '"', "\n");
         }
         $csv      = substr_replace($csv, "", -1);
         $csv_rows = count($tokens);
