@@ -49,7 +49,9 @@ class CsvUtils
             if (!empty(array_diff(array_keys($value), $headers))) {
                 throw new \Exception("Bad csv", 400);
             }
-            $csv .= self::sputcsv(array_values($value), ';', '"', "\n");
+
+            $clean_array = str_replace("\n", " ", array_values($value));
+            $csv       .= self::sputcsv($clean_array, ';', '"', "\n");
         }
         $csv      = substr_replace($csv, "", -1);
         $csv_rows = count($tokens);
