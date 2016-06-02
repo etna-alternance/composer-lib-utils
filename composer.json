@@ -12,11 +12,10 @@
     ],
     "require": {
         "php": ">=5.5",
-        "etna/sprinter-service-provider": "~0.1"
+        "etna/sprinter-service-provider": "2.x-dev"
     },
     "require-dev": {
-        "ext-runkit": ">1.0.3",
-        "behat/behat": "2.x@stable",
+        "behat/behat": "3.x",
         "fzaninotto/faker": "~1.0",
 
         "phpunit/phpunit": "~4.0",
@@ -28,12 +27,15 @@
         "satooshi/php-coveralls": "dev-master",
         "phing/phing":"*@stable",
 
-        "etna/composer-behat-utils": "0.x"
+        "etna/composer-behat-utils": "2.x-dev",
+        "etna/rabbitmq-service-provider": "2.x-dev"
+
     },
     "autoload": {
         "psr-4": {
             "ETNA\\Utils\\": "src",
-            "TestLibUtils\\": "app"
+            "TestLibUtils\\": "app",
+            "TestContext\\": "Tests/Functional/Context"
         }
     },
     "extra": {

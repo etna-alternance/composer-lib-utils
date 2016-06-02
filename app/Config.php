@@ -3,8 +3,8 @@
 namespace TestLibUtils;
 
 use Silex\Application;
-
-use Silex\ServiceProviderInterface;
+use Pimple\Container;
+use Pimple\ServiceProviderInterface;
 
 /**
  * Configuration principale de l'application
@@ -24,7 +24,7 @@ class Config implements ServiceProviderInterface
     /**
      * @{inherit doc}
      */
-    public function register(Application $app)
+    public function register(Container $app)
     {
         $this->registerEnvironmentParams($app);
 
