@@ -32,15 +32,6 @@ class Config implements ServiceProviderInterface
     }
 
     /**
-     *
-     * @{inherit doc}
-     */
-    public function boot(Application $app)
-    {
-        return $app;
-    }
-
-    /**
      * Set up environmental variables
      *
      * If development environment, set xdebug to display all the things

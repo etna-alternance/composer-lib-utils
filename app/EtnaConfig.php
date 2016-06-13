@@ -2,7 +2,6 @@
 
 namespace TestLibUtils;
 
-use Silex\Application;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
 
@@ -72,9 +71,9 @@ class EtnaConfig implements ServiceProviderInterface
     {
         $app["rmq_producers"] = [
             'email' => [
-                'connection'        => 'default',
-                'exchange_options'  => $this->rabbitmq_config['exchanges']['default'],
-                'queue_options'     => ['name' => 'email', 'routing_keys' => ['email']]
+                'connection'       => 'default',
+                'exchange_options' => $this->rabbitmq_config['exchanges']['default'],
+                'queue_options'    => ['name' => 'email', 'routing_keys' => ['email']]
             ]
         ];
 
@@ -82,14 +81,5 @@ class EtnaConfig implements ServiceProviderInterface
 
         $app->register(new RabbitConfig($this->rabbitmq_config));
         $app->register(new SPrinterServiceProvider());
-    }
-
-    /**
-     *
-     * @{inherit doc}
-     */
-    public function boot(Application $app)
-    {
-        return $app;
     }
 }
