@@ -7,8 +7,8 @@ default:
             paths:
                 - %paths.base%/Tests/Functional/features
             contexts:
-                - ETNA\FeatureContext\MainContext
                 - ETNA\FeatureContext\RabbitContext
+                - ETNA\FeatureContext\MainContext
                 - TestContext\FeatureContext
     formatters:
         progress:
@@ -31,8 +31,8 @@ ci:
                         - bin
                         - tmp
                         - Tests
+                - ETNA\FeatureContext\RabbitContext
                 - ETNA\FeatureContext\MainContext
-                - ETNA\FeatureContext\ApiContext
                 - TestContext\FeatureContext
 wip:
     suites:
