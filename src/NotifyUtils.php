@@ -117,7 +117,11 @@ class NotifyUtils
 
         $mail = array_merge($mail, $email_opt);
 
-        $app["amqp.queues"]["email"]->send($mail);
+        if (false === isset($app["rabbit.producer"]) || false === isset($app["rabbit.producer"]["email"])) {
+            throw new \Exception("You must provide the email rabbitmq producer", 400);
+        }
+
+        $app["rabbit.producer"]["email"]->publish(json_encode($mail), 'email');
 
         return $email_to;
     }

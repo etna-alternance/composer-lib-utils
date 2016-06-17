@@ -1,6 +1,8 @@
 <?php
 
-use Behat\Behat\Context\BehatContext;
+namespace TestContext;
+
+use ETNA\FeatureContext\BaseContext;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -14,14 +16,8 @@ use ETNA\Utils\PasswordUtils;
 /**
  * Features context
  */
-class FeatureContext extends BehatContext
+class FeatureContext extends BaseContext
 {
-    use EtnaFeatureContext\Coverage;
-    use EtnaFeatureContext\Check;
-    use EtnaFeatureContext\setUpScenarioDirectories;
-    use EtnaFeatureContext\SilexApplication;
-    use EtnaFeatureContext\RabbitMQ;
-
     static private $_parameters;
     static private $vhosts;
 
@@ -30,21 +26,25 @@ class FeatureContext extends BehatContext
     private $error     = null;
 
     /**
-     * Initialize context
-     * Every scenario gets it's own context object.
-     *
-     * @param array $parameters context parameters (set them up through behat.yml)
+     * @BeforeScenario @Sprinter
      */
-    public function __construct(array $parameters)
+    public static function createSprinterQueues()
     {
-        self::$_parameters = $parameters;
-        self::$vhosts      = ["/test-behat"];
+        $channel = self::$silex_app['rabbit.producer']['sprinter']->getChannel();
+        $channel->exchange_declare('SPrinter', 'direct', false, true, false);
 
-        ini_set('display_errors', true);
-        ini_set('xdebug.var_display_max_depth', 100);
-        ini_set('xdebug.var_display_max_children', 100);
-        ini_set('xdebug.var_display_max_data', 100);
-        error_reporting(E_ALL);
+        foreach (['lefran_f', 'norris_c'] as $sprinter_user) {
+            $queue_opt = self::$silex_app['rmq.queues']["sprinter.{$sprinter_user}"];
+            $channel->queue_declare(
+                $queue_opt["name"],
+                $queue_opt["passive"],
+                $queue_opt["durable"],
+                $queue_opt["exclusive"],
+                $queue_opt["auto_delete"]
+            );
+
+            $channel->queue_bind($queue_opt['name'], $queue_opt['exchange'], $queue_opt['routing.key']);
+        }
     }
 
     /**
@@ -62,7 +62,7 @@ class FeatureContext extends BehatContext
         }
 
         $array_to_convert = array_map(
-            function($line) use ($prefix) {
+            function ($line) use ($prefix) {
                 return CsvUtils::getTokenFromArray($line, $prefix);
             },
             $array_to_convert
