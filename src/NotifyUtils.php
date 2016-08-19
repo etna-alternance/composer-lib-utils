@@ -47,7 +47,9 @@ class NotifyUtils
         $routing_key = (null === $routing_key) ?
             $app["sprinter.options"]["default.routing_key"] : $routing_key;
 
-        $app["sprinter"]->sendPrint($template, $data, true, $routing_key, $sprinter_opt);
+        $printflag = array_key_exists("printflag", $sprinter_opt) ? $sprinter_opt["printflag"] : true;
+
+        $app["sprinter"]->sendPrint($template, $data, $printflag, $routing_key, $sprinter_opt);
 
         return $routing_key;
     }
