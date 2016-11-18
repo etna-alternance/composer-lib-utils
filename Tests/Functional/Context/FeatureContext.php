@@ -77,9 +77,9 @@ class FeatureContext extends BaseContext
     }
 
     /**
-     * @When /^j'envoie un mail a "([^"]*)" avec "([^"]*)" avec le titre "([^"]*)" et le template contenu dans le fichier "([^"]*)" et les tokens contenus dans "([^"]*)"(?: avec comme pièce jointe les fichiers "([^"]*)"?)?$/
+     * @When /^j'envoie un mail a "([^"]*)" avec "([^"]*)" avec le titre "([^"]*)" et le template contenu dans le fichier "([^"]*)" et les tokens contenus dans "([^"]*)"(?: avec comme pièce jointe les fichiers "([^"]*)"?)?(?: avec en copie les emails "([^"]*)"?)?$/
      */
-    public function jEnvoieUnMail($to_email, $from_email, $title, $template_filename, $tokens_filename, $files = null)
+    public function jEnvoieUnMail($to_email, $from_email, $title, $template_filename, $tokens_filename, $files = null, $cc = null)
     {
         $template_filepath = realpath($this->requests_path . "/" . $template_filename);
         $template          = file_get_contents($template_filepath);
@@ -88,7 +88,7 @@ class FeatureContext extends BaseContext
         $tokens            = json_decode($tokens_content, true);
 
         $mail_opt = [];
-        if (null !== $files) {
+        if (null !== $files && false === empty($files)) {
             $mail_opt = [
                 "files" => NotifyUtils::prepareFilesForMail(
                     array_map(
@@ -103,6 +103,13 @@ class FeatureContext extends BaseContext
                     )
                 )
             ];
+        }
+
+        if (null !== $cc) {
+            $cc       = [
+                "cc" => explode(";", $cc)
+            ];
+            $mail_opt = true === empty($mail_opt) ? $cc : array_merge($cc, $mail_opt);
         }
 
         try {

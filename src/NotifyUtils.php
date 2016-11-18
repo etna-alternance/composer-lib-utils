@@ -86,6 +86,7 @@ class NotifyUtils
      * @param string      $email_template Le template du mail
      * @param string      $email_to       L'email du destinataire
      * @param array       $mail_data      Le tableau de tokens qui seront remplacés dans le template
+     * @param array       $email_opt      Le tableau contenant les options à rajouter à l'email (ex : files ou les cc)
      *
      * @return string L'adresse mail a laquelle le mail a été envoyé
      */
@@ -113,12 +114,19 @@ class NotifyUtils
         $mail     = [
             "from"    => $email_from,
             "to"      => $email_to,
-            "cc"      => [ "re@etna-alternance.net" ],
             "subject" => $email_title,
             "content" => $template
         ];
 
         $mail = array_merge($mail, $email_opt);
+
+        $cc_re_etna = [ "re@etna-alternance.net" ];
+
+        if (false === isset($mail["cc"])) {
+            $mail["cc"] = $cc_re_etna;
+        } else if (isset($mail["cc"]) && false === in_array($cc_re_etna[0], $mail["cc"])) {
+            $mail["cc"] = array_merge($mail["cc"], $cc_re_etna);
+        }
 
         if (false === isset($app["rabbit.producer"]) || false === isset($app["rabbit.producer"]["email"])) {
             throw new \Exception("You must provide the email rabbitmq producer", 400);
