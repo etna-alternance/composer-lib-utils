@@ -120,12 +120,10 @@ class NotifyUtils
 
         $mail = array_merge($mail, $email_opt);
 
-        $cc_re_etna = [ "re@etna-alternance.net" ];
-
         if (false === isset($mail["cc"])) {
-            $mail["cc"] = $cc_re_etna;
-        } else if (isset($mail["cc"]) && false === in_array($cc_re_etna[0], $mail["cc"])) {
-            $mail["cc"] = array_merge($mail["cc"], $cc_re_etna);
+            $mail["cc"] = [ $email_from ];
+        } elseif (isset($mail["cc"]) && false === in_array($email_from, $mail["cc"])) {
+            $mail["cc"] = array_merge($mail["cc"], [ $email_from ]);
         }
 
         if (false === isset($app["rabbit.producer"]) || false === isset($app["rabbit.producer"]["email"])) {

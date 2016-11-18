@@ -33,8 +33,8 @@ Scénario: Envoyer un email avec des pieces jointes et plusieurs cc
     Alors il ne devrait pas y avoir eu une erreur
     Et    le producer "email" devrait avoir publié un message dans la queue "email" avec le corps contenu dans "email_with_files_job_and_cc.json"
 
-Scénario: Envoyer un email avec une copie de mail qui est re@etna
-    Quand j'envoie un mail a "test@test.test" avec "sender@send.er" avec le titre "title" et le template contenu dans le fichier "simple_template" et les tokens contenus dans "simple_tokens.json" avec en copie les emails "re@etna-alternance.net"
+Scénario: Envoyer un email avec une copie de mail qui est l'émetteur du mail
+    Quand j'envoie un mail a "test@test.test" avec "sender@send.er" avec le titre "title" et le template contenu dans le fichier "simple_template" et les tokens contenus dans "simple_tokens.json" avec en copie les emails "sender@send.er"
     Alors il ne devrait pas y avoir eu une erreur
     Et    le producer "email" devrait avoir publié un message dans la queue "email" avec le corps contenu dans "simple_email_job.json"
 
