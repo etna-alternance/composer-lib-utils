@@ -47,7 +47,9 @@ class NotifyUtils
         $routing_key = (null === $routing_key) ?
             $app["sprinter.options"]["default.routing_key"] : $routing_key;
 
-        $app["sprinter"]->sendPrint($template, $data, true, $routing_key, $sprinter_opt);
+        $printflag = array_key_exists("printFlag", $sprinter_opt) ? $sprinter_opt["printFlag"] : true;
+
+        $app["sprinter"]->sendPrint($template, $data, $printflag, $routing_key, $sprinter_opt);
 
         return $routing_key;
     }
@@ -111,13 +113,18 @@ class NotifyUtils
         $mail     = [
             "from"    => $email_from,
             "to"      => $email_to,
+            "cc"      => [ "re@etna-alternance.net" ],
             "subject" => $email_title,
             "content" => $template
         ];
 
         $mail = array_merge($mail, $email_opt);
 
-        $app["amqp.queues"]["email"]->send($mail);
+        if (false === isset($app["rabbit.producer"]) || false === isset($app["rabbit.producer"]["email"])) {
+            throw new \Exception("You must provide the email rabbitmq producer", 400);
+        }
+
+        $app["rabbit.producer"]["email"]->publish(json_encode($mail), 'email');
 
         return $email_to;
     }

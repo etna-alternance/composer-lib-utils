@@ -1,6 +1,7 @@
 {
     "from": "sender@send.er",
     "to":   "test@test.test",
+    "cc":   [ "re@etna-alternance.net" ],
     "subject": "title",
     "content": "Bonjour,\n\nOn va juste tester l'envoi de mail avec un template tout simple et s'apercevoir que ca fonctionne trop super bien.\n\nC'est vraiment méga génial  !\n"
 }
