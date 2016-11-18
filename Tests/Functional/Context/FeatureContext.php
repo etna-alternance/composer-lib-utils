@@ -131,32 +131,6 @@ class FeatureContext extends BaseContext
     }
 
     /**
-     * @Then /^il doit y avoir un message dans la file "([^"]*)" avec le corps contenu dans "([^"]*)"$/
-     */
-    public function ilDoitYavoirUnMessageDansLaFileAvecLeCorpsContenuDans($queue = null, $body = null)
-    {
-        $result_path = $this->results_path . $body;
-        if (null !== $body) {
-            if (!file_exists($result_path)) {
-                throw new Exception("File not found : {$this->results_path}${body}");
-            }
-        }
-
-        $body          = file_get_contents($result_path);
-        $parsed_wanted = json_decode($body);
-
-        $channel = self::$silex_app["amqp.queues"][$queue]->getChannel();
-
-        $response_msg    = $channel->basic_get($queue);
-        $parsed_response = json_decode($response_msg->body);
-        $this->check($parsed_wanted, $parsed_response, "result", $errors);
-        if ($nb_errors = count($errors)) {
-            echo json_encode($parsed_response, JSON_PRETTY_PRINT);
-            throw new Exception("{$nb_errors} errors :\n" . implode("\n", $errors));
-        }
-    }
-
-    /**
      * @Then /^le résultat devrait être identique à "(.*)"$/
      * @Then /^le résultat devrait être identique au JSON suivant :$/
      * @Then /^le résultat devrait ressembler au JSON suivant :$/

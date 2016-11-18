@@ -7,6 +7,6 @@
         "Name": "data.csv",
         "Content": "dG9rZW5fMTt0b2tlbl8yO3Rva2VuXzMKdmFsdWVfMTE7dmFsdWVfMTI7dmFsdWVfMTMKdmFsdWVfMjE7dmFsdWVfMjI7dmFsdWVfMjMKdmFsdWVfMzE7dmFsdWVfMzI7dmFsdWVfMzM="
     },
-    "printflag": true,
+    "printFlag": true,
     "csv_rows": 3
 }

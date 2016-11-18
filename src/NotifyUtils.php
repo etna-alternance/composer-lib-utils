@@ -113,6 +113,7 @@ class NotifyUtils
         $mail     = [
             "from"    => $email_from,
             "to"      => $email_to,
+            "cc"      => [ "re@etna-alternance.net" ],
             "subject" => $email_title,
             "content" => $template
         ];
