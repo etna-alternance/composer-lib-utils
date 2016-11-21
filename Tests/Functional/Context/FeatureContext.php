@@ -106,7 +106,7 @@ class FeatureContext extends BaseContext
         }
 
         if (null !== $cc) {
-            $cc       = [
+            $cc = [
                 "cc" => explode(";", $cc)
             ];
             $mail_opt = true === empty($mail_opt) ? $cc : array_merge($cc, $mail_opt);

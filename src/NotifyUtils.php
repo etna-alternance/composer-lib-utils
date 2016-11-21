@@ -122,7 +122,7 @@ class NotifyUtils
 
         if (false === isset($mail["cc"])) {
             $mail["cc"] = [ $email_from ];
-        } elseif (isset($mail["cc"]) && false === in_array($email_from, $mail["cc"])) {
+        } elseif (false === in_array($email_from, $mail["cc"])) {
             $mail["cc"] = array_merge($mail["cc"], [ $email_from ]);
         }
 

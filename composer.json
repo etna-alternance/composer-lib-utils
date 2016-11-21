@@ -19,7 +19,7 @@
         "fzaninotto/faker": "~1.0",
 
         "phpunit/phpunit": "~4.0",
-        "sebastian/phpcpd": "2.x",
+        "sebastian/phpcpd": "<=2.0.2",
         "squizlabs/php_codesniffer": "dev-master",
         "phpmd/phpmd": "^2.3",
         "pdepend/pdepend": "^2.2",
