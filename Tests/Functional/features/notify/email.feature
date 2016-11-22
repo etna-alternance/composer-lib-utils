@@ -23,7 +23,7 @@ Scénario: Envoyer un email avec une copie de mail
     Alors il ne devrait pas y avoir eu une erreur
     Et    le producer "email" devrait avoir publié un message dans la queue "email" avec le corps contenu dans "simple_email_job_with_cc.json"
 
-Scénario: Envoyer un email avec plusieur copie de mail
+Scénario: Envoyer un email avec plusieurs copies de mail
     Quand j'envoie un mail a "test@test.test" avec "sender@send.er" avec le titre "title" et le template contenu dans le fichier "simple_template" et les tokens contenus dans "simple_tokens.json" avec en copie les emails "panda@bloub.com;salut@bloub.com;patapouf@bloub.com"
     Alors il ne devrait pas y avoir eu une erreur
     Et    le producer "email" devrait avoir publié un message dans la queue "email" avec le corps contenu dans "simple_email_job_with_many_cc.json"
