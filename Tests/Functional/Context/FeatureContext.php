@@ -77,9 +77,9 @@ class FeatureContext extends BaseContext
     }
 
     /**
-     * @When /^j'envoie un mail a "([^"]*)" avec "([^"]*)" avec le titre "([^"]*)" et le template contenu dans le fichier "([^"]*)" et les tokens contenus dans "([^"]*)"(?: avec comme pièce jointe les fichiers "([^"]*)"?)?$/
+     * @When /^j'envoie un mail a "([^"]*)" avec "([^"]*)" avec le titre "([^"]*)" et le template contenu dans le fichier "([^"]*)" et les tokens contenus dans "([^"]*)"(?: avec comme pièce jointe les fichiers "([^"]*)"?)?(?: avec en copie les emails "([^"]*)"?)?$/
      */
-    public function jEnvoieUnMail($to_email, $from_email, $title, $template_filename, $tokens_filename, $files = null)
+    public function jEnvoieUnMail($to_email, $from_email, $title, $template_filename, $tokens_filename, $files = null, $cc = null)
     {
         $template_filepath = realpath($this->requests_path . "/" . $template_filename);
         $template          = file_get_contents($template_filepath);
@@ -88,7 +88,7 @@ class FeatureContext extends BaseContext
         $tokens            = json_decode($tokens_content, true);
 
         $mail_opt = [];
-        if (null !== $files) {
+        if (null !== $files && false === empty($files)) {
             $mail_opt = [
                 "files" => NotifyUtils::prepareFilesForMail(
                     array_map(
@@ -103,6 +103,13 @@ class FeatureContext extends BaseContext
                     )
                 )
             ];
+        }
+
+        if (null !== $cc) {
+            $cc = [
+                "cc" => explode(";", $cc)
+            ];
+            $mail_opt = true === empty($mail_opt) ? $cc : array_merge($cc, $mail_opt);
         }
 
         try {
@@ -127,32 +134,6 @@ class FeatureContext extends BaseContext
             NotifyUtils::sendPrint(self::$silex_app, $template_filename, $template, $queue_name, $tokens);
         } catch (\Exception $exception) {
             $this->error = $exception;
-        }
-    }
-
-    /**
-     * @Then /^il doit y avoir un message dans la file "([^"]*)" avec le corps contenu dans "([^"]*)"$/
-     */
-    public function ilDoitYavoirUnMessageDansLaFileAvecLeCorpsContenuDans($queue = null, $body = null)
-    {
-        $result_path = $this->results_path . $body;
-        if (null !== $body) {
-            if (!file_exists($result_path)) {
-                throw new Exception("File not found : {$this->results_path}${body}");
-            }
-        }
-
-        $body          = file_get_contents($result_path);
-        $parsed_wanted = json_decode($body);
-
-        $channel = self::$silex_app["amqp.queues"][$queue]->getChannel();
-
-        $response_msg    = $channel->basic_get($queue);
-        $parsed_response = json_decode($response_msg->body);
-        $this->check($parsed_wanted, $parsed_response, "result", $errors);
-        if ($nb_errors = count($errors)) {
-            echo json_encode($parsed_response, JSON_PRETTY_PRINT);
-            throw new Exception("{$nb_errors} errors :\n" . implode("\n", $errors));
         }
     }
 

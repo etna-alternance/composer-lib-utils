@@ -79,6 +79,25 @@ class NotifyUtils
     }
 
     /**
+     * Ajoute l'émetteur du mail en CC si il n'y est pas déjà
+     *
+     * @param array       $mail          Les donnés de l'email
+     * @param string      $email_from    L'email de l'émetteur
+     *
+     * @return array
+     */
+    private static function addEmailFromToCC(array $mail, $email_from)
+    {
+        if (false === array_key_exists("cc", $mail) || empty($mail["cc"])) {
+            $mail["cc"] = [ $email_from ];
+        } elseif (false === in_array($email_from, $mail["cc"])) {
+            $mail["cc"] = array_merge($mail["cc"], [ $email_from ]);
+        }
+
+        return $mail;
+    }
+
+    /**
      * Envoie un mail via rabbitMq
      *
      * @param Application $app            Silex application
@@ -86,6 +105,7 @@ class NotifyUtils
      * @param string      $email_template Le template du mail
      * @param string      $email_to       L'email du destinataire
      * @param array       $mail_data      Le tableau de tokens qui seront remplacés dans le template
+     * @param array       $email_opt      Le tableau contenant les options à rajouter à l'email (ex : files ou les cc)
      *
      * @return string L'adresse mail a laquelle le mail a été envoyé
      */
@@ -118,6 +138,7 @@ class NotifyUtils
         ];
 
         $mail = array_merge($mail, $email_opt);
+        $mail = self::addEmailFromToCC($mail, $email_from);
 
         if (false === isset($app["rabbit.producer"]) || false === isset($app["rabbit.producer"]["email"])) {
             throw new \Exception("You must provide the email rabbitmq producer", 400);
