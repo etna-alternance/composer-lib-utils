@@ -44,10 +44,12 @@ class NotifyUtils
             "Content" => $csv_base64,
         ];
 
+        $print_flag = true === isset($sprinter_opt["printFlag"]) ? $sprinter_opt["printFlag"] : true;
+
         $routing_key = (null === $routing_key) ?
             $app["sprinter.options"]["default.routing_key"] : $routing_key;
 
-        $app["sprinter"]->sendPrint($template, $data, true, $routing_key, $sprinter_opt);
+        $app["sprinter"]->sendPrint($template, $data, $print_flag, $routing_key, $sprinter_opt);
 
         return $routing_key;
     }
