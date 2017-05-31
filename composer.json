@@ -11,8 +11,9 @@
         }
     ],
     "require": {
-        "php": ">=5.5",
-        "etna/sprinter-service-provider": "2.x-dev"
+        "php": ">=5.6",
+        "etna/sprinter-service-provider": "2.x-dev",
+        "etna/rabbitmq-service-provider": "2.x-dev"
     },
     "require-dev": {
         "behat/behat": "3.x",
@@ -27,9 +28,7 @@
         "satooshi/php-coveralls": "dev-master",
         "phing/phing":"*@stable",
 
-        "etna/composer-behat-utils": "2.x-dev",
-        "etna/rabbitmq-service-provider": "2.x-dev"
-
+        "etna/composer-behat-utils": "2.x-dev"
     },
     "autoload": {
         "psr-4": {
@@ -40,7 +39,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "2.0-dev"
         }
     },
     "scripts": {
@@ -54,7 +53,7 @@
     "repositories": [
        {
            "type": "composer",
-           "url": "http://blu-composer.herokuapp.com"
+           "url": "https://blu-composer.herokuapp.com"
        }
    ]
 }

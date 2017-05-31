@@ -12,7 +12,7 @@ class EntityUtils
      *
      * @return array
      */
-    public static function getDiff($old, $new, $translations = [], $exclusions = [])
+    public static function getChanges(array $old, array $new, array $translations = [], array $exclusions = [])
     {
         $changes = [];
 
@@ -31,20 +31,10 @@ class EntityUtils
             }
 
             switch (true) {
-                case (false === isset($old[$field]) && true === isset($new[$field]) && '' !== trim($new[$field])):
-                case (true === isset($old[$field]) &&
-                    '' === trim($old[$field]) &&
-                    true === isset($new[$field]) &&
-                    '' !== trim($new[$field])
-                ):
+                case (self::checkEmptyField($old, $new, $field)):
                     $changes[] = "* Ajout {$field_translation} '{$new[$field]}'";
                     break;
-                case (true === isset($old[$field]) && '' !== trim($old[$field]) && false === isset($new[$field])):
-                case (true === isset($old[$field]) &&
-                    '' !== trim($old[$field]) &&
-                    true === isset($new[$field]) &&
-                    '' === trim($new[$field])
-                ):
+                case (self::checkEmptyField($new, $old, $field)):
                     $changes[] = "* Suppression {$field_translation} '{$old[$field]}'";
                     break;
                 case (true === isset($old[$field]) && true === isset($new[$field]) && $old[$field] !== $new[$field]):
@@ -56,5 +46,19 @@ class EntityUtils
         }
 
         return $changes;
+    }
+
+    private static function checkEmptyField(array $a_array, array $b_array, $field)
+    {
+        return (
+            false === isset($a_array[$field]) &&
+            true === isset($b_array[$field]) &&
+            '' !== trim($b_array[$field])
+        ) || (
+            true === isset($a_array[$field]) &&
+            '' === $a_array[$field] &&
+            true === isset($b_array[$field]) &&
+            '' !== trim($b_array[$field])
+        );
     }
 }
