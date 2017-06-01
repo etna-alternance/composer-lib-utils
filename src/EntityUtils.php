@@ -56,7 +56,7 @@ class EntityUtils
             '' !== trim($b_array[$field])
         ) || (
             true === isset($a_array[$field]) &&
-            '' === $a_array[$field] &&
+            '' === trim($a_array[$field]) &&
             true === isset($b_array[$field]) &&
             '' !== trim($b_array[$field])
         );
