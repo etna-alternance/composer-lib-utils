@@ -42,4 +42,4 @@ Toutes les classes `utils` de ce composant seront dans le namespace `ETNA\Utils`
 
 ### EntityUtils
 
-- `EntityUtils::getDiff` Effectue la comparaison entre 2 tableaux et renvoie les différences
+- `EntityUtils::getChanges` Effectue la comparaison entre 2 tableaux et renvoie les différences

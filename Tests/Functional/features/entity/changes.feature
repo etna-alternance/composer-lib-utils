@@ -8,7 +8,7 @@ Scénario: Différence entre 2 entités
     Alors le résultat devrait ressembler au JSON suivant :
     """
     [
-        "* Changement du maybe 'i came on too strong'' => 'i waited too long'",
+        "* Changement du maybe 'i came on too strong' => 'i waited too long'",
         "* Suppression du suhsuh 'nono'",
         "* Ajout du maybe i played 'my cards wrong'"
     ]
@@ -19,7 +19,7 @@ Scénario: Différence entre 2 entités en excluant certains champs
     Alors le résultat devrait ressembler au JSON suivant :
     """
     [
-        "* Changement du maybe 'i came on too strong'' => 'i waited too long'",
+        "* Changement du maybe 'i came on too strong' => 'i waited too long'",
         "* Ajout du maybe i played 'my cards wrong'"
     ]
     """
@@ -29,7 +29,7 @@ Scénario: Différence entre 2 entités en utilisant une traduction des champs
     Alors le résultat devrait ressembler au JSON suivant :
     """
     [
-        "* Changement de peut-être 'i came on too strong'' => 'i waited too long'",
+        "* Changement de peut-être 'i came on too strong' => 'i waited too long'",
         "* Suppression de sisi et pas nono 'nono'",
         "* Ajout de peut-être j'ai joué 'my cards wrong'"
     ]

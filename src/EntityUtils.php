@@ -9,6 +9,8 @@ class EntityUtils
      *
      * @param  array $old
      * @param  array $new
+     * @param  array $translations Traductions des champs
+     * @param  array $exclusions   Champs à ne pas prendre en compte
      *
      * @return array
      */
@@ -38,7 +40,7 @@ class EntityUtils
                     $changes[] = "* Suppression {$field_translation} '{$old[$field]}'";
                     break;
                 case (true === isset($old[$field]) && true === isset($new[$field]) && $old[$field] !== $new[$field]):
-                    $changes[] = "* Changement {$field_translation} '{$old[$field]}'' => '{$new[$field]}'";
+                    $changes[] = "* Changement {$field_translation} '{$old[$field]}' => '{$new[$field]}'";
                     break;
                 default:
                     break;
