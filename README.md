@@ -39,3 +39,7 @@ Toutes les classes `utils` de ce composant seront dans le namespace `ETNA\Utils`
 
 - `PasswordUtils::generate` Génère un mot de passe paramètrable (nombre de lettre, nombre d'autres caractères)
 - `PasswordUtils::encrypt` Chiffre le mot de passe donné en paramètre
+
+### EntityUtils
+
+- `EntityUtils::getChanges` Effectue la comparaison entre 2 tableaux et renvoie les différences

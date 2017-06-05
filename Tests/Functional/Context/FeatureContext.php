@@ -12,6 +12,7 @@ use ETNA\Utils\FileUtils as EtnaFileUtils;
 use ETNA\Utils\LoginUtils;
 use ETNA\Utils\NotifyUtils;
 use ETNA\Utils\PasswordUtils;
+use ETNA\Utils\EntityUtils;
 
 /**
  * Features context
@@ -127,32 +128,6 @@ class FeatureContext extends BaseContext
             NotifyUtils::sendPrint(self::$silex_app, $template_filename, $template, $queue_name, $tokens);
         } catch (\Exception $exception) {
             $this->error = $exception;
-        }
-    }
-
-    /**
-     * @Then /^il doit y avoir un message dans la file "([^"]*)" avec le corps contenu dans "([^"]*)"$/
-     */
-    public function ilDoitYavoirUnMessageDansLaFileAvecLeCorpsContenuDans($queue = null, $body = null)
-    {
-        $result_path = $this->results_path . $body;
-        if (null !== $body) {
-            if (!file_exists($result_path)) {
-                throw new Exception("File not found : {$this->results_path}${body}");
-            }
-        }
-
-        $body          = file_get_contents($result_path);
-        $parsed_wanted = json_decode($body);
-
-        $channel = self::$silex_app["amqp.queues"][$queue]->getChannel();
-
-        $response_msg    = $channel->basic_get($queue);
-        $parsed_response = json_decode($response_msg->body);
-        $this->check($parsed_wanted, $parsed_response, "result", $errors);
-        if ($nb_errors = count($errors)) {
-            echo json_encode($parsed_response, JSON_PRETTY_PRINT);
-            throw new Exception("{$nb_errors} errors :\n" . implode("\n", $errors));
         }
     }
 
@@ -299,5 +274,34 @@ class FeatureContext extends BaseContext
         if (null !== $code && $this->error->getCode() !== $code) {
             throw new Exception("Expecting error code to be \"{$code}\" but got \"{$this->error->getCode()}\"");
         }
+    }
+
+    /**
+     * @When /^je veux connaître les différences entre "([^"]*)" et "([^"]*)"(?: en excluant "([^"]*)")?(?: avec les traductions "([^"]*)")?$/
+     */
+    public function jeVeuxConnaitreLesDifferencesEntreEt($old_filename, $new_filename, $exclusions = "", $translations = "")
+    {
+        $old_filepath = realpath($this->requests_path . "/" . $old_filename);
+        $new_filepath = realpath($this->requests_path . "/" . $new_filename);
+
+        $old = json_decode(file_get_contents($old_filepath), true);
+        $new = json_decode(file_get_contents($new_filepath), true);
+
+        if ("" !== trim($exclusions)) {
+            $exclusion_filepath = realpath($this->requests_path . "/" . $exclusions);
+            $exclusions         = json_decode(file_get_contents($exclusion_filepath), true);
+        } else {
+            $exclusions = [];
+        }
+
+        if ("" !== trim($translations)) {
+            $translation_filepath = realpath($this->requests_path . "/" . $translations);
+            $translations         = json_decode(file_get_contents($translation_filepath), true);
+        } else {
+            $translations = [];
+        }
+
+
+        $this->result = EntityUtils::getChanges($old, $new, $translations, $exclusions);
     }
 }
