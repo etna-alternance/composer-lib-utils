@@ -20,7 +20,7 @@ class CsvUtils
             if (is_array($value)) {
                 $tokens = array_merge($tokens, self::getTokenFromArray($value, $sub_prefix));
             } else {
-                $tokens[$sub_prefix] = utf8_decode($value);
+                $tokens[$sub_prefix] = mb_convert_encoding($value, 'Windows-1252', 'UTF-8');
             }
         }
         return $tokens;
