@@ -17,7 +17,7 @@
         </exec>
     </target>
     <target name="phpcs">
-        <exec executable="phpcs" passthru="true" checkreturn="false">
+        <exec executable="phpcs" passthru="true" checkreturn="true">
             <arg value="-p"/>
             <arg value="--standard=PSR12"/>
             <arg path="src/"/>

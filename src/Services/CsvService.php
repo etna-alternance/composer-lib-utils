@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHP version 7.1
  * @author BLU <dev@etna-alternance.net>
@@ -42,12 +43,12 @@ class CsvService
     /**
      * Prends un tableau PHP et en génère un csv.
      *
-     * @param array $array    Array a transformer
-     * @param int   $csv_rows Nombre de rows générées
+     * @param array    $array    Array a transformer
+     * @param int|null $csv_rows Nombre de rows générées
      *
      * @return string
      */
-    public function arrayToCsv(array $array, int &$csv_rows = 0)
+    public function arrayToCsv(array $array, ?int &$csv_rows = 0)
     {
         if (true === empty($array)) {
             $csv_rows = 0;

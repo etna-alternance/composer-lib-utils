@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHP version 7.1
  * @author BLU <dev@etna-alternance.net>
@@ -37,24 +38,24 @@ class NotifyService
      * Permet d'imprimer un tableau associatif $sprinter_data
      * transforme le tableau en csv et l'envoi au sprinter d'ecrit dans $routing_key.
      *
-     * @param string $letter_title    Le nom du document .docx à générer
-     * @param string $letter_template Le template .docx à générer
-     * @param string $routing_key     Le nom de la routing key
-     * @param array  $sprinter_data   Le tableaux associatif contenant les informations à imprimer
-     * @param array  $sprinter_opt    Le tableaux d'options optionnelles pour sprinter
-     *                                - printflag     : impression sur papier véritable
-     *                                - skip_generate : n'envoie pas le document dans les dossiers électroniques
-     *                                - send_mail     : envoi du document par mail après génération
-     *                                - mail_to       : destinataire du mail
-     *                                - mail_title    : titre du mail
-     *                                - mail_body     : contenu du mail
+     * @param string      $letter_title    Le nom du document .docx à générer
+     * @param string      $letter_template Le template .docx à générer
+     * @param string|null $routing_key     Le nom de la routing key
+     * @param array       $sprinter_data   Le tableaux associatif contenant les informations à imprimer
+     * @param array       $sprinter_opt    Le tableaux d'options optionnelles pour sprinter
+     *                                     - printflag     : impression sur papier véritable
+     *                                     - skip_generate : n'envoie pas le document dans les dossiers électroniques
+     *                                     - send_mail     : envoi du document par mail après génération
+     *                                     - mail_to       : destinataire du mail
+     *                                     - mail_title    : titre du mail
+     *                                     - mail_body     : contenu du mail
      *
      * @return string routing_key
      */
     public function sendPrint(
         string $letter_title,
         string $letter_template,
-        string $routing_key,
+        ?string $routing_key,
         array $sprinter_data,
         array $sprinter_opt = []
     ): string {
