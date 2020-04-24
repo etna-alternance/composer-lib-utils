@@ -1,13 +1,13 @@
-image: etna/drone-php
+image: etna/drone-php7:php71
+cache:
+  - /root/.composer
 env:
-  - APPLICATION_ENV=drone
+  - APPLICATION_ENV=test
   - COVERALLS_REPO_TOKEN=$$COVERALLS_TOKEN
   - COVERALLS_SERVICE_NAME=drone.io
-  - RABBITMQ_URL=http://guest:guest@localhost:5672
-  - RABBITMQ_VHOST=/test-behat
-  - TEST_LIBUTILS_SPRINTER_ROUTING_KEY=sprinter.lefran_f
 script:
-  - composer install --dev --no-interaction --prefer-source
+  - composer global require phpdocumentor/phpdocumentor --no-interaction --prefer-dist --no-progress
+  - composer install --dev --no-interaction --prefer-dist --no-progress
   - composer phing
   - composer coveralls
 services:

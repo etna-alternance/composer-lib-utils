@@ -1,0 +1,12 @@
+{
+    "template": {
+        "Name": "super_content.json",
+        "Content": "ewogICAgImNvbnRlbnQiOiAiQ291Y291IHRvaSAhIgp9Cg=="
+    },
+    "data": {
+        "Name": "data.csv",
+        "Content": "aWQ7bmFtZQo0Mjt0dXR1"
+    },
+    "printflag": false,
+    "csv_rows": 1
+}

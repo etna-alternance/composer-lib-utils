@@ -1,0 +1,6 @@
+{
+    "title": "Super mail",
+    "template": "Bonjour, ceci est un mail, Bisous",
+    "from": "dev@etna-alternance.net",
+    "to": "asys@etna-alternance.net"
+}

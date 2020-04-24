@@ -1,0 +1,13 @@
+old_sound_rabbit_mq:
+    connections:
+        default:
+            url:   'amqp://guest:guest@rabbitmq:5672'
+            vhost: '/test-behat'
+    producers:
+        email:
+            connection: default
+            exchange_options: { name: 'etna', type: 'direct' }
+            queue_options:
+                name: email
+                routing_keys:
+                    - email

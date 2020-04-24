@@ -1,0 +1,6 @@
+{
+    "routing_key": "sprinter.blu",
+    "options": {
+        "printflag": false
+    }
+}
