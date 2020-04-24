@@ -1,0 +1,36 @@
+services:
+    etna_utils.csv_service:
+        autoconfigure: true
+        autowire: true
+        public: true
+        class: 'ETNA\Utils\Services\CsvService'
+
+    etna_utils.file_service:
+        autoconfigure: true
+        autowire: true
+        public: true
+        class: 'ETNA\Utils\Services\FileService'
+
+    etna_utils.login_service:
+        autoconfigure: true
+        autowire: true
+        public: true
+        class: 'ETNA\Utils\Services\LoginService'
+
+    etna_utils.notify_service:
+        autoconfigure: true
+        autowire: true
+        public: true
+        class: 'ETNA\Utils\Services\NotifyService'
+
+    etna_utils.password_service:
+        autoconfigure: true
+        autowire: true
+        public: true
+        class: 'ETNA\Utils\Services\PasswordService'
+
+    ETNA\Utils\Services\CsvService: '@etna_utils.csv_service'
+    ETNA\Utils\Services\FileService: '@etna_utils.file_service'
+    ETNA\Utils\Services\LoginService: '@etna_utils.login_service'
+    ETNA\Utils\Services\NotifyService: '@etna_utils.notify_service'
+    ETNA\Utils\Services\PasswordService: '@etna_utils.password_service'

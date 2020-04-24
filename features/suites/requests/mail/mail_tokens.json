@@ -1,0 +1,14 @@
+{
+    "title": "Super mail",
+    "template": "Bonjour {salutation} {firstname} {lastname}, ceci est un mail, Bisous {firstname}",
+    "from": "dev@etna-alternance.net",
+    "to": "asys@etna-alternance.net",
+    "mail_data": {
+        "salutation": "Monsieur",
+        "firstname": "John",
+        "lastname": "CENA"
+    },
+    "options": {
+        "cc": "supermail@etna-alternance.net"
+    }
+}

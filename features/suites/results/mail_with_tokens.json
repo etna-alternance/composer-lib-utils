@@ -1,0 +1,17 @@
+{
+    "from": "dev@etna-alternance.net",
+    "to": "asys@etna-alternance.net",
+    "cc": "supermail@etna-alternance.net",
+    "subject": "Super mail",
+    "content": "Bonjour Monsieur John CENA, ceci est un mail, Bisous John",
+    "files": [
+        {
+            "name": "super_content.json",
+            "content": "ewogICAgImNvbnRlbnQiOiAiQ291Y291IHRvaSAhIgp9Cg=="
+        },
+        {
+            "name": "super_content.csv",
+            "content": "aWQ7bmFtZTtjb2xvcgoxO3RhdGE7cmVkCjI7dHV0dTtibHVlCjM7dGl0aTtncmVlbgo0O3RvdG87YmxvdWdlCg=="
+        }
+    ]
+}

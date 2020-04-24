@@ -2,12 +2,13 @@ tools:
     php_sim: true
     php_pdepend: true
     php_analyzer: true
-tools:
     external_code_coverage:
-        timeout: 600    # Timeout in seconds.
+        timeout: 2000
 filter:
     paths:
-        - src/*
+        - src/
+    dependency_paths:
+        - vendor/
 checks:
     php:
         code_rating: true

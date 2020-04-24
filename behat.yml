@@ -1,41 +1,58 @@
-# behat.yml
 default:
-    autoload:
-        '': %paths.base%/vendor/etna/composer-behat-utils/src/contexts
-    suites:
-        default:
-            paths:
-                - %paths.base%/Tests/Functional/features
-            contexts:
-                - ETNA\FeatureContext\RabbitContext
-                - ETNA\FeatureContext\MainContext
-                - TestContext\FeatureContext
-    formatters:
-        progress:
-            decorated:           true
-            verbose:             false
-            time:                true
-            language:            fr
-            output_path:         null
-            multiline_arguments: true
+  formatters:
+    progress:
+        decorated:           true
+        verbose:             true
+        time:                true
+        language:            fr
+        output_path:         null
+        multiline_arguments: true
+
+  suites:
+    default:
+      paths:
+        - '%paths.base%/features/suites'
+      contexts:
+        - FeatureContext
+        - ETNA\FeatureContext\RabbitContext
+        - ETNA\FeatureContext\ApiContext
+        - ETNA\FeatureContext\ExceptionContainerContext
+        - ETNA\FeatureContext\SymfonyTestKernelContext:
+            bundles:
+              - '\ETNA\Utils\UtilsBundle'
+  extensions:
+    Behat\Symfony2Extension:
+      kernel:
+        class: TestApp\Kernel
+        bootstrap: Testapp/bootstrap.php
+        env:   testing
+
 ci:
-    suites:
-        default:
-            contexts:
-                - ETNA\FeatureContext\CoverageContext:
-                    coverage_path: /tmp/behat/coverage
-                    whitelist:
-                        - app
-                    blacklist:
-                        - vendor
-                        - bin
-                        - tmp
-                        - Tests
-                - ETNA\FeatureContext\RabbitContext
-                - ETNA\FeatureContext\MainContext
-                - TestContext\FeatureContext
-wip:
-    suites:
-        default:
-            filters:
-                tags: '@wip'
+  suites:
+    default:
+      paths:
+        - '%paths.base%/features/suites'
+      contexts:
+        - ETNA\FeatureContext\CoverageContext:
+            coverage_path: /tmp/behat/coverage
+            whitelist:
+                - src
+            blacklist:
+                - vendor
+                - bin
+                - tmp
+                - Tests
+        - FeatureContext
+        - ETNA\FeatureContext\RabbitContext
+        - ETNA\FeatureContext\ApiContext
+        - ETNA\FeatureContext\ExceptionContainerContext
+        - ETNA\FeatureContext\SymfonyTestKernelContext:
+            bundles:
+              - '\ETNA\Utils\UtilsBundle'
+
+  extensions:
+    Behat\Symfony2Extension:
+      kernel:
+        class: TestApp\Kernel
+        bootstrap: Testapp/bootstrap.php
+        env:   testing

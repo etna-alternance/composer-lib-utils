@@ -1,0 +1,5 @@
+[
+    {"id": 1, "name": "toto", "data": {"color": "red", "count": 1}},
+    {"id": 2, "name": "tutu", "data": {"color": "blue", "count": 4}},
+    {"id": 3, "name": "titi", "data": {"color": "green", "count": 2}}
+]

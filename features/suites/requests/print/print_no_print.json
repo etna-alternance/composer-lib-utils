@@ -1,0 +1,9 @@
+{
+    "routing_key": "sprinter.blu",
+    "sprinter_data": [
+        {"id": 42, "name": "tutu"}
+    ],
+    "options": {
+        "printflag": false
+    }
+}
