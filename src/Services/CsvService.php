@@ -42,8 +42,8 @@ class CsvService
     /**
      * Prends un tableau PHP et en génère un csv.
      *
-     * @param array    $array    Array a transformer
-     * @param int      $csv_rows Nombre de rows générées
+     * @param array $array    Array a transformer
+     * @param int   $csv_rows Nombre de rows générées
      *
      * @return string
      */

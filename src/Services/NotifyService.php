@@ -11,7 +11,7 @@ namespace ETNA\Utils\Services;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Service permettant l'envoi d'impressions ou de mails
+ * Service permettant l'envoi d'impressions ou de mails.
  */
 class NotifyService
 {
@@ -22,7 +22,7 @@ class NotifyService
     private $csv;
 
     /**
-     * Constructeur de la classe
+     * Constructeur de la classe.
      *
      * @param ContainerInterface $container Le container de l'appli
      * @param CsvService         $csv       Le service CSV
@@ -37,17 +37,17 @@ class NotifyService
      * Permet d'imprimer un tableau associatif $sprinter_data
      * transforme le tableau en csv et l'envoi au sprinter d'ecrit dans $routing_key.
      *
-     * @param string      $letter_title    Le nom du document .docx à générer
-     * @param string      $letter_template Le template .docx à générer
-     * @param string      $routing_key     Le nom de la routing key
-     * @param array       $sprinter_data   Le tableaux associatif contenant les informations à imprimer
-     * @param array       $sprinter_opt    Le tableaux d'options optionnelles pour sprinter
-     *  - printflag     : impression sur papier véritable
-     *  - skip_generate : n'envoie pas le document dans les dossiers électroniques
-     *  - send_mail     : envoi du document par mail après génération
-     *  - mail_to       : destinataire du mail
-     *  - mail_title    : titre du mail
-     *  - mail_body     : contenu du mail
+     * @param string $letter_title    Le nom du document .docx à générer
+     * @param string $letter_template Le template .docx à générer
+     * @param string $routing_key     Le nom de la routing key
+     * @param array  $sprinter_data   Le tableaux associatif contenant les informations à imprimer
+     * @param array  $sprinter_opt    Le tableaux d'options optionnelles pour sprinter
+     *                                - printflag     : impression sur papier véritable
+     *                                - skip_generate : n'envoie pas le document dans les dossiers électroniques
+     *                                - send_mail     : envoi du document par mail après génération
+     *                                - mail_to       : destinataire du mail
+     *                                - mail_title    : titre du mail
+     *                                - mail_body     : contenu du mail
      *
      * @return string routing_key
      */
@@ -103,14 +103,14 @@ class NotifyService
     /**
      * Envoie un mail via rabbitMq.
      *
-     * @param string      $email_title    Le titre de l'email
-     * @param string      $email_template Le template du mail
-     * @param string      $email_from     L'email de l'expéditeur
-     * @param string      $email_to       L'email du destinataire (plusieurs séparés par une virgule)
-     * @param array       $mail_data      Le tableau de tokens qui seront remplacés dans le template
-     * @param array       $email_opt      Les options supplémentaires du mail
-     *  - cc  : destinataires par copie
-     *  - bcc : destinataires par copie cachée
+     * @param string $email_title    Le titre de l'email
+     * @param string $email_template Le template du mail
+     * @param string $email_from     L'email de l'expéditeur
+     * @param string $email_to       L'email du destinataire (plusieurs séparés par une virgule)
+     * @param array  $mail_data      Le tableau de tokens qui seront remplacés dans le template
+     * @param array  $email_opt      Les options supplémentaires du mail
+     *                               - cc  : destinataires par copie
+     *                               - bcc : destinataires par copie cachée
      *
      * @return string L'adresse mail a laquelle le mail a été envoyé
      */

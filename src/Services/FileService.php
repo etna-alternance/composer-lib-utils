@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class FileService
 {
     /**
-     * Récupere le contenu d'un fichier JSON ou CSV et le transforme en array PHP
+     * Récupere le contenu d'un fichier JSON ou CSV et le transforme en array PHP.
      *
      * @param UploadedFile $file Le fichier à parser
      *
@@ -40,7 +40,7 @@ class FileService
     }
 
     /**
-     * Transforme une string CSV en array PHP
+     * Transforme une string CSV en array PHP.
      *
      * @param string $content
      *

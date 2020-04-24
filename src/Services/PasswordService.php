@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace ETNA\Utils\Services;
 
 /**
- * Service de génération de mot de passe
+ * Service de génération de mot de passe.
  */
 class PasswordService
 {
