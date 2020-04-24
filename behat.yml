@@ -16,6 +16,8 @@ default:
         - FeatureContext
         - ETNA\FeatureContext\RabbitContext
         - ETNA\FeatureContext\ApiContext
+        - ETNA\FeatureContext\TimeProfilerContext:
+            max_time: 300
         - ETNA\FeatureContext\ExceptionContainerContext
         - ETNA\FeatureContext\SymfonyTestKernelContext:
             bundles:
@@ -24,7 +26,7 @@ default:
     Behat\Symfony2Extension:
       kernel:
         class: TestApp\Kernel
-        bootstrap: Testapp/bootstrap.php
+        bootstrap: TestApp/bootstrap.php
         env:   testing
 
 ci:
@@ -45,6 +47,8 @@ ci:
         - FeatureContext
         - ETNA\FeatureContext\RabbitContext
         - ETNA\FeatureContext\ApiContext
+        - ETNA\FeatureContext\TimeProfilerContext:
+            max_time: 300
         - ETNA\FeatureContext\ExceptionContainerContext
         - ETNA\FeatureContext\SymfonyTestKernelContext:
             bundles:
@@ -54,5 +58,5 @@ ci:
     Behat\Symfony2Extension:
       kernel:
         class: TestApp\Kernel
-        bootstrap: Testapp/bootstrap.php
+        bootstrap: TestApp/bootstrap.php
         env:   testing

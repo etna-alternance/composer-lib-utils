@@ -4,7 +4,6 @@ vendor/
 .DS_Store
 doc/
 .php_cs.cache
-.env
 
 ###> symfony/framework-bundle ###
 /.env.local
