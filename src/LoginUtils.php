@@ -71,9 +71,13 @@ class LoginUtils
         }
 
         $normalized_names = [
-            strtolower(self::removeAccents($firstname)),
-            strtolower(self::removeAccents($lastname))
+            preg_replace("/[^a-zA-Z0-9]+/", "", strtolower(self::removeAccents($firstname))),
+            preg_replace("/[^a-zA-Z0-9]+/", "", strtolower(self::removeAccents($lastname)))
         ];
+
+        if (empty(trim($normalized_names[0])) || empty(trim($normalized_names[1]))) {
+            throw new \Exception("Normalized firstname and lastname can't be empty to generate login", 400);
+        }
 
         $lastname  = str_replace(' ', '', $normalized_names[1]);
         $firstname = str_replace(' ', '', $normalized_names[0]);
